@@ -4,6 +4,7 @@
 % This Block can draw simple block of boxes with custom colors. 
 % Can be used for conv, deconv etc
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \tikzset{RightBandedBox/.pic={\tikzset{/block/.cd,#1}
                 
         \tikzstyle{box}=[every edge/.append style={pic actions, densely dashed, opacity=.7},fill opacity=\opacity, pic actions,fill=\fill]
@@ -20,17 +21,17 @@
                  \unscaledx in \cubex
         {
             \pgfmathsetmacro{\x}{\unscaledx*\scale}
-            \coordinate (a)     at (\k-\x   , \y/2 , \z/2); 
-            \coordinate (art)   at (\k-\x/3 , \y/2 , \z/2); %a_right_third
-            \coordinate (b)     at (\k-\x   ,-\y/2 , \z/2); 
-            \coordinate (brt)   at (\k-\x/3 ,-\y/2 , \z/2); %b_right_third
-            \coordinate (c)     at (\k      ,-\y/2 , \z/2); 
-            \coordinate (d)     at (\k      , \y/2 , \z/2); 
-            \coordinate (e)     at (\k      , \y/2 ,-\z/2); 
-            \coordinate (f)     at (\k      ,-\y/2 ,-\z/2); 
-            \coordinate (g)     at (\k-\x   ,-\y/2 ,-\z/2); 
-            \coordinate (h)     at (\k-\x   , \y/2 ,-\z/2); 
-            \coordinate (hrt)   at (\k-\x/3 , \y/2 ,-\z/2); %h_right_third
+            \coordinate (a)     at (\k-\x         , \y/2 , \z/2); 
+            \coordinate (art)   at (\k-\scale     , \y/2 , \z/2); %a_right_third
+            \coordinate (b)     at (\k-\x         ,-\y/2 , \z/2); 
+            \coordinate (brt)   at (\k-\scale     ,-\y/2 , \z/2); %b_right_third
+            \coordinate (c)     at (\k            ,-\y/2 , \z/2); 
+            \coordinate (d)     at (\k            , \y/2 , \z/2); 
+            \coordinate (e)     at (\k-0*\scale       , \y/2 ,-\z/2); 
+            \coordinate (f)     at (\k-0*\scale       ,-\y/2 ,-\z/2); 
+            \coordinate (g)     at (\k-0*\scale-\x    ,-\y/2 ,-\z/2); 
+            \coordinate (h)     at (\k-0*\scale-\x    , \y/2 ,-\z/2); 
+            \coordinate (hrt)   at (\k-0*\scale-\scale, \y/2 ,-\z/2); %h_right_third
             
             %fill box color 			
             \draw [box] 
@@ -62,8 +63,11 @@
         \coordinate (b1) at (0 ,-\y/2 , \z/2);
         \tikzstyle{depthlabel}=[pos=0,text width=14*\z,text centered,sloped]       
         
-        \path (c) edge ["\small\zlabels"',depthlabel](f); %depth label
-        \path (b1) edge ["\ylabel",midway] (a1);  %height label 	  
+        \path (c) edge ["\small\zlabels"',depthlabel, pos=.3](f); %depth label
+        \ifthenelse{\cubex<3}
+        {\path (b1) edge ["\ylabel", pos=.4] (a1);}
+        {\path (b1) edge ["\ylabel", pos=.4, swap] (a1);}
+        %height label 	  
         
         \tikzstyle{captionlabel}=[text width=15*\LastEastx/\scale,text centered] 
         \path (\LastEastx/2,-\y/2,+\z/2) + (0,-25pt) coordinate (cap) 
@@ -122,9 +126,9 @@
     height=13,
     depth=15,
     scale=.2,
-    xlabel={{"","","","","","","","","",""}},
+    xlabel=,
     ylabel=,
     zlabel=,
-    caption=,
+    % caption=,
     name=,
 }
